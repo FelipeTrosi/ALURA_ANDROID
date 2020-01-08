@@ -32,6 +32,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
+        configuraLista();
         dao.salvar(new Aluno("Felipe", "977313054","felipetrosi123@gmail.com"));
         dao.salvar(new Aluno("Braufa", "930420302","braufagelio523@gmail.com"));
         dao.salvar(new Aluno("Asdruball", "93748923","asdruballinho@gmail.com"));
@@ -54,7 +55,12 @@ public class ListaAlunoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        configuraLista();
+        atualizaAlunos();
+    }
+
+    private void atualizaAlunos() {
+        adapter.clear();
+        adapter.addAll(dao.todos());
     }
 
     private void configuraLista() {
@@ -62,15 +68,23 @@ public class ListaAlunoActivity extends AppCompatActivity {
         final List<Aluno> alunos = dao.todos();
         configuraAdapter(listaDeAlunos, alunos);
         configuraListenerDeClickPorItem(listaDeAlunos);
+        configuraListenerDeClickLongoPorItem(listaDeAlunos);
+    }
+
+    private void configuraListenerDeClickLongoPorItem(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(position);
-                dao.remove(alunoEscolhido);
-                adapter.remove(alunoEscolhido);
+                remove(alunoEscolhido);
                 return true;
             }
         });
+    }
+
+    private void remove(Aluno aluno) {
+        dao.remove(aluno);
+        adapter.remove(aluno);
     }
 
     private void configuraListenerDeClickPorItem(ListView listaDeAlunos) {
