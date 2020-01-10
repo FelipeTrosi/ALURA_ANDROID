@@ -38,7 +38,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
         dao.salvar(new Aluno("Felipe", "977313054", "felipetrosi123@gmail.com"));
         dao.salvar(new Aluno("Braufa", "930420302", "braufagelio523@gmail.com"));
-        dao.salvar(new Aluno("Asdruball", "93748923", "asdruballinho@gmail.com"));
+
     }
 
     @Override
