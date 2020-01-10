@@ -53,11 +53,12 @@ public class ListaAlunoActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(final MenuItem item) {
 
         int itemId = item.getItemId();
 
         if (itemId == R.id.activity_lista_de_alunos_remover) {
+
             confirmaRemocao(item);
         }
         return super.onContextItemSelected(item);
@@ -71,6 +72,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                         Aluno alunoescolhido = adapter.getItem(menuInfo.position);
                         remove(alunoescolhido);
