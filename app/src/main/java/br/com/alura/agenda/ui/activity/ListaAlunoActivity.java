@@ -1,5 +1,6 @@
 package br.com.alura.agenda.ui.activity;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,17 +8,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 import static br.com.alura.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
@@ -25,7 +32,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     public static final String TITULO_APPBAR = "Lista de alunos";
     private final AlunoDAO dao = new AlunoDAO();
-    private ArrayAdapter<Aluno> adapter;
+    private ListaAlunosAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +95,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
     private void configuraLista() {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_de_alunos_listview);
         final List<Aluno> alunos = dao.todos();
-        configuraAdapter(listaDeAlunos, alunos);
+        configuraAdapter(listaDeAlunos);
         configuraListenerDeClickPorItem(listaDeAlunos);
         registerForContextMenu(listaDeAlunos);
     }
@@ -115,11 +122,8 @@ public class ListaAlunoActivity extends AppCompatActivity {
         startActivity(vaiParaFormularioActivity);
     }
 
-    private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                alunos);
+    private void configuraAdapter(ListView listaDeAlunos) {
+        adapter = new ListaAlunosAdapter(this);
         listaDeAlunos.setAdapter(adapter);
     }
 }
